@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PORT=3000
+PORT=5432
 
 PID=$(lsof -t -i:$PORT)
 
