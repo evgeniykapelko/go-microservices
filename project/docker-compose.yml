@@ -1,10 +1,10 @@
 version: '3'
 
 services:
+
   broker-service:
     build:
       context: ./../broker-service
-
       dockerfile: ./../broker-service/broker-service.dockerfile
     restart: always
     ports:
@@ -16,12 +16,29 @@ services:
   logger-service:
     build:
       context: ./../logger-service
-
       dockerfile: ./../logger-service/logger-service.dockerfile
     restart: always
     deploy:
       mode: replicated
       replicas: 1
+
+  mailer-service:
+    build:
+      context: ./../mail-service
+      dockerfile: ./../mail-service/mail-service.dockerfile
+    restart: always
+    deploy:
+      mode: replicated
+      replicas: 1
+    environment:
+      MAIL_DOMAIN: localhost
+      MAIL_HOST: mailhog
+      MAIL_PORT: 1025
+      MAIL_ENCRYPTION: none
+      MAIL_USERNAME: ""
+      MAIL_PASSWORD: ""
+      FROM_NAME: "John Smith"
+      FROM_ADDRESS: john.smith@example.com
 
   authentication-service:
     build:
@@ -35,6 +52,7 @@ services:
       replicas: 1
     environment:
       DSN: "host=postgres port=5432 user=postgres password=password dbname=users sslmode=disable timezone=UTC connect_timeout=5"
+
 
   postgres:
     image: 'postgres:14.2'
@@ -58,7 +76,7 @@ services:
     environment:
       MONGO_INITDB_DATABASE: logs
       MONGO_INITDB_ROOT_USERNAME: admin
-      MONGO_INITDB_ROOT_PASSWORD: admin
+      MONGO_INITDB_ROOT_PASSWORD: password
     volumes:
       - ./db-data/mongo/:/data/db
 
@@ -67,3 +85,5 @@ services:
     ports:
       - "1025:1025"
       - "8025:8025"
+      
+      

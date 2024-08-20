@@ -28,6 +28,9 @@ type Message struct {
 	Data        any
 	DataMap     map[string]any
 }
+type ADD interface {
+	add()
+}
 
 func (m *Mail) SendSMTPMessage(msg Message) error {
 	if msg.From == "" {
