@@ -5,3 +5,5 @@ authentication-service/authApp
 broker-service/brokerApp
 frontend/frontApp
 logger-service/loggerServiceApp
+mail-service/mailerApp
+listener-service/listenerApp
