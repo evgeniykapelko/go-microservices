@@ -1,0 +1,6 @@
+DOCKER
+docker build -f listener-service.dockerfile -t evgeniy19/listener-service:1.0.0 .
+docker push evgeniy19/listener-service:1.0.0
+
+PROTO
+protoc --go_out=. --go_opt=paths=source_relative --go-grpc_out=. --go-grpc_opt=paths=source_relative logs.proto
